@@ -1,4 +1,4 @@
-const baseURL = 'https://jsonplaceholder.typicode.com'
+const baseURL = 'https://jsonplaceholder.typicod.com'
 
 const urls = {
    users: '/users',

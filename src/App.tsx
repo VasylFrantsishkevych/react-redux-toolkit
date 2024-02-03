@@ -1,21 +1,27 @@
-import { useEffect } from 'react';
+import { ReactNode, useEffect, FC } from 'react';
 import './App.css';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { userActions } from './redux';
 
+interface IProps {
+  children?: ReactNode
+}
 
-function App() {
+
+function App () {
   const dispatch = useAppDispatch();
-  const {users} = useAppSelector(state => state.users);
+  const {users, status, error} = useAppSelector(state => state.users);
   console.log(users)
+
   useEffect(() => {
-    dispatch(userActions.getAllUsers)
-    
+    dispatch(userActions.getAllUsers())
   }, [])
-  
+  console.log()
   return (
     <div >
-
+        {status && <div>Loading...</div>} 
+        {error && <div>error</div>}
+        {users.map(user => <div key={user.id}>{user.name}</div>)}
     </div>
   );
 }
