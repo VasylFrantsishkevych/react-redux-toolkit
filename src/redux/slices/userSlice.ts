@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { IUser } from "../../interfaces"
 import { userService } from "../../servises"
 import { AxiosError } from "axios"
+import { rootReducer } from "../store"
 
 interface IState {
    users: IUser[],
@@ -14,6 +15,7 @@ const initialState: IState = {
    status: null,
    error: undefined,
 }
+
 
 const getAllUsers = createAsyncThunk<IUser[]>(
    'userSlice/getAllUsers',
@@ -31,6 +33,10 @@ const getAllUsers = createAsyncThunk<IUser[]>(
 const userSlice = createSlice({
    name: 'userSlice',
    initialState,
+   // toolkit 2
+   selectors : {
+      selectUsers: state => state,
+   },
    reducers: {},
    extraReducers: builder => {
       builder
@@ -48,24 +54,24 @@ const userSlice = createSlice({
 
          .addDefaultCase((state, action) => {
             const [type] = action.type.split('/').splice(-1)
-            console.log(action)
             if (type === 'pending'){
                state.status = true;
             } 
          })
-         // .addDefaultCase((state, action) => {
-         //    const [type] = action.type.split('/').splice(-1);
-         //    if (type === 'rejected') {
-         //        console.log(action)
-         //    } else {
-         //        state.error = undefined
-         //    }
+      //    .addDefaultCase((state, action) => {
+      //       const [type] = action.type.split('/').splice(-1);
+      //       if (type === 'rejected') {
+      //           console.log(action)
+      //       } else {
+      //           state.error = undefined
+      //       }
       //   })
-   }
+   },
 })
 
-const {reducer: userReducer, actions: {}} = userSlice;
+
+const {reducer: userReducer, actions: {}, selectors: {selectUsers}} = userSlice;
 
 const userActions = {getAllUsers};
 
-export {userReducer, userActions};
+export {userReducer, userActions, selectUsers};

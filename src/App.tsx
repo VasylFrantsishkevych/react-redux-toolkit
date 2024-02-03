@@ -1,15 +1,13 @@
 import { ReactNode, useEffect, FC } from 'react';
 import './App.css';
 import { useAppDispatch, useAppSelector } from './hooks';
-import { userActions } from './redux';
-
-interface IProps {
-  children?: ReactNode
-}
+import { selectUsers, userActions } from './redux';
 
 
 function App () {
   const dispatch = useAppDispatch();
+  //toolkit 2.0
+  // const {users, status, error} = useAppSelector(selectUsers)
   const {users, status, error} = useAppSelector(state => state.users);
   console.log(users)
 
