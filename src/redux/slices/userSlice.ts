@@ -2,7 +2,6 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { IUser } from "../../interfaces"
 import { userService } from "../../servises"
 import { AxiosError } from "axios"
-import { rootReducer } from "../store"
 
 interface IState {
    users: IUser[],
@@ -33,10 +32,6 @@ const getAllUsers = createAsyncThunk<IUser[]>(
 const userSlice = createSlice({
    name: 'userSlice',
    initialState,
-   // toolkit 2
-   selectors : {
-      selectUsers: state => state,
-   },
    reducers: {},
    extraReducers: builder => {
       builder
@@ -49,6 +44,7 @@ const userSlice = createSlice({
          })
          .addCase(getAllUsers.rejected, (state, action) => {
             state.status = false
+            state.users = []
             state.error = action.error.message
          })
 
@@ -70,8 +66,8 @@ const userSlice = createSlice({
 })
 
 
-const {reducer: userReducer, actions: {}, selectors: {selectUsers}} = userSlice;
+const {reducer: userReducer, actions: {}} = userSlice;
 
 const userActions = {getAllUsers};
 
-export {userReducer, userActions, selectUsers};
+export {userReducer, userActions};

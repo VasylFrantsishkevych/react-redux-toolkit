@@ -1,7 +1,8 @@
-import { ReactNode, useEffect, FC } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { useAppDispatch, useAppSelector } from './hooks';
-import { selectUsers, userActions } from './redux';
+import { userActions } from './redux';
+import { selectUsers } from './redux/slices/userSlice2';
 
 
 function App () {
@@ -9,12 +10,11 @@ function App () {
   //toolkit 2.0
   // const {users, status, error} = useAppSelector(selectUsers)
   const {users, status, error} = useAppSelector(state => state.users);
-  console.log(users)
 
   useEffect(() => {
     dispatch(userActions.getAllUsers())
   }, [])
-  console.log()
+  
   return (
     <div >
         {status && <div>Loading...</div>} 
